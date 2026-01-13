@@ -1,0 +1,63 @@
+pipeline {
+  agent any
+
+  environment {
+    AWS_DEFAULT_REGION = 'eu-west-1'
+  }
+
+  stages {
+
+    stage('Checkout') {
+      steps {
+        checkout scm 
+      }
+    }
+
+    stage('Prepare SAM Template') {
+      steps {
+        dir('IM-CAPITAL-BACKEND-SERVICE') {
+          sh 'cp template.prod.yaml template.yaml'
+        }
+      }
+    }
+
+    stage('Validate') {
+      steps {
+        dir('IM-CAPITAL-BACKEND-SERVICE') {
+          sh 'sam validate'
+        }
+      }
+    }
+
+    stage('Build') {
+      steps {
+        dir('IM-CAPITAL-BACKEND-SERVICE') {
+          sh 'sam build'
+        }
+      }
+    }
+
+    stage('Deploy (Guided Config – Credentials Placeholder)') {
+      steps {
+        dir('IM-CAPITAL-BACKEND-SERVICE') {
+          sh '''
+            echo "sam deploy --guided --profile <ENV_PROFILE>"
+            echo "Stack Name: IM-CAPITAL-BACKEND-PROD"
+            echo "Region: eu-west-1"
+            echo "Environment parameter: prod"
+            echo "Outputs will be saved to samconfig.toml"
+          '''
+        }
+      }
+    }
+  }
+
+  post {
+    success {
+      echo 'Pipeline finished successfully.'
+    }
+    failure {
+      echo 'Pipeline failed.'
+    }
+  }
+}

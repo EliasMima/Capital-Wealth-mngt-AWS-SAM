@@ -1,0 +1,34 @@
+version = 0.1
+
+[default.global.parameters]
+stack_name = "IM-CAPITAL-BACKEND-PROD"
+region = "eu-west-1"
+
+[default.build.parameters]
+cached = true
+parallel = true
+
+[default.validate.parameters]
+lint = true
+
+[default.package.parameters]
+resolve_s3 = true
+s3_bucket = "dummy-s3-bucket"          # placeholder for demonstration
+s3_prefix = "IM-CAPITAL-BACKEND-PROD"
+
+[default.deploy.parameters]
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = false
+parameter_overrides = "Environment=prod"
+disable_rollback = false
+role_arn = ""                            # optional for IAM role, keep empty
+
+[default.sync.parameters]
+watch = true
+
+[default.local_start_api.parameters]
+warm_containers = "EAGER"
+
+[default.local_start_lambda.parameters]
+warm_containers = "EAGER"
+
