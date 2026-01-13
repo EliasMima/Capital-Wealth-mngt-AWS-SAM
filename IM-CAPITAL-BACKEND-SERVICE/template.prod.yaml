@@ -15,8 +15,8 @@ Parameters:
 
 Globals:
   Function:
-    Timeout: 15                # Production-appropriate
-    MemorySize: 512            # Increased for realistic workloads
+    Timeout: 15                
+    MemorySize: 512            
     Tracing: Active
     LoggingConfig:
       LogFormat: JSON
