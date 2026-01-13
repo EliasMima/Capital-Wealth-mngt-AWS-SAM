@@ -1,22 +1,22 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  Capital Wealth Management – Serverless API
+  Capital Wealth Management – Serverless API (Production)
 
 Parameters:
   Environment:
     Type: String
-    Default: dev
+    Default: prod
     AllowedValues:
       - dev
       - test
       - prod
-    Description: Deployment environment identifier
+    Description: Deployment environment
 
 Globals:
   Function:
-    Timeout: 10
-    MemorySize: 256
+    Timeout: 15                # Production-appropriate
+    MemorySize: 512            # Increased for realistic workloads
     Tracing: Active
     LoggingConfig:
       LogFormat: JSON
@@ -53,7 +53,7 @@ Outputs:
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/Prod/"
 
   HelloWorldEndpoint:
-    Description: Hello World resource endpoint
+    Description: Hello World endpoint
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/Prod/hello/"
 
   HelloWorldFunctionArn:

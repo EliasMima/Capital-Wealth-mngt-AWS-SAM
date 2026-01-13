@@ -1,9 +1,8 @@
-# More information about the configuration file can be found here:
-# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-config.html
 version = 0.1
 
 [default.global.parameters]
-stack_name = "sam-app"
+stack_name = "IM-CAPITAL-BACKEND-PROD"
+region = "eu-west-1"
 
 [default.build.parameters]
 cached = true
@@ -12,13 +11,17 @@ parallel = true
 [default.validate.parameters]
 lint = true
 
-[default.deploy.parameters]
-capabilities = "CAPABILITY_IAM"
-confirm_changeset = true
-resolve_s3 = true
-
 [default.package.parameters]
 resolve_s3 = true
+s3_bucket = "dummy-s3-bucket"          # placeholder for demonstration
+s3_prefix = "IM-CAPITAL-BACKEND-PROD"
+
+[default.deploy.parameters]
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = false
+parameter_overrides = "Environment=prod"
+disable_rollback = false
+role_arn = ""                            # optional for IAM role, keep empty
 
 [default.sync.parameters]
 watch = true
@@ -28,3 +31,4 @@ warm_containers = "EAGER"
 
 [default.local_start_lambda.parameters]
 warm_containers = "EAGER"
+
